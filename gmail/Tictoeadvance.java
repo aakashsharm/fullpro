@@ -1,5 +1,6 @@
 package gmail;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.io.File;
 import java.io.IOException;
@@ -9,6 +10,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -20,9 +22,10 @@ public class Tictoeadvance {
 		// TODO Auto-generated method stub
 		FirefoxDriver d=new FirefoxDriver();
 		d.get("http://10.0.1.86/tatoc/");
+		printlink(d);
 		d.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		d.findElementByLinkText("Advanced Course").click();
-
+		
 	Actions act=new Actions(d);
 	act.moveToElement(d.findElementByXPath("//div[@class='menutop m2']")).click().build().perform();
 	d.findElementByXPath("//span[contains(text(),'Go Next')]").click();
@@ -40,7 +43,7 @@ public class Tictoeadvance {
 	          d.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 	          d.findElement(By.id("passkey")).sendKeys(passkey);
 	          d.findElement(By.id("submit")).click();
-	    
+	
 	          break;
 	      }
 	      //JavascriptExecutor js = (JavascriptExecutor) d;
@@ -55,19 +58,36 @@ public class Tictoeadvance {
 	
 	      }
 	
-	public static  void takescreen(FirefoxDriver f) throws IOException
+	public static  void takescreen(FirefoxDriver f) throws IOException, InterruptedException
 	{
+		addwait(f,10);
 		 File src =f.getScreenshotAs(OutputType.FILE);
 			FileUtils fu=new FileUtils();
 			File dest= new File("C:/Users/aakashsharma/Desktop/march/image7"+ ".png");
 			fu.moveFile(src, dest);
 		
+		
 	}
-	public static void addwait(FirefoxDriver d) throws InterruptedException
+public static void addwait(WebDriver d,int x) throws InterruptedException
 	{
-		d.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+		d.manage().timeouts().implicitlyWait(x, TimeUnit.SECONDS);
 		Thread.sleep(5000);
 	}
+	
+	public static void printlink(WebDriver dr){
+		
+		List<WebElement> links= dr.findElements(By.tagName("a"));
+		
+		for(WebElement c:links)
+		{
+			System.out.println(c.getText());
+		}
+		
+		
+	}
+	
+	
+	
 	
 	}
 	
